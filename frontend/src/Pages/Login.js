@@ -53,9 +53,9 @@ export const Login = (props) => {
   }
 
   return (
-    <div className='flex justify-between w-11/12 max-w-[1160px] py-12 mx-auto gap-x-12 gap-y-0'>
+    <div className='flex justify-center w-11/12 max-w-[1160px] py-12 mx-auto gap-x-12 gap-y-0 mt-[200px]'>
 
-      <form onSubmit={submitHandler} className='w-[450px]'>
+      <form onSubmit={submitHandler} className='w-[400px]'>
         <div className='flex justify-between gap-2 flex-col'>
         <label className='w-full flex flex-col items-start relative mt-1'>
           <p className='text-[0.875rem] text-gray-50 mb-1 leading-[1.375rem] ml-2'>Email Address <span className='text-red-500'>*</span></p>
@@ -82,13 +82,13 @@ export const Login = (props) => {
             {showPassword? (<AiOutlineEyeInvisible/>) : (<AiOutlineEye/>)}
           </span>
         </label>
-        <div className='my-[10px] flex justify-between w-full text-blue-400'>
-          <Link to='/signup' className='text-xs'>Register Here</Link>
+        <div className='my-[10px] flex w-full text-blue-400 justify-end'>
           <Link to="#" className='text-xs'>
             Forgot Password?
           </Link>
         </div>
-        <button className='my-[25px] bg-yellow-400 w-full text-black p-[3px] rounded-md'>Login</button>
+        <div className='mt-[30px] flex justify-center'><p>Don't have an account? No worries <Link to='/signup' className='text-blue-400'>Register here</Link></p></div>
+        <button className='mb-[25px] bg-yellow-400 w-full text-black p-[3px] rounded-md text-lg'>Login</button>
         </div>
       </form>
     </div>

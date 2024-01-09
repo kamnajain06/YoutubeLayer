@@ -4,6 +4,7 @@ import { AiOutlineEye } from "react-icons/ai";
 import { AiOutlineEyeInvisible } from "react-icons/ai";
 import { toast } from "react-hot-toast";
 import { FcGoogle } from "react-icons/fc";
+import youtube from "../images/youtube.png"
 
 export const Signup = ({ setISLoggedIn }) => {
   const navigate = useNavigate();
@@ -73,7 +74,7 @@ export const Signup = ({ setISLoggedIn }) => {
   };
 
   return (
-    <div className="flex justify-between w-11/12 max-w-[1160px] py-12 mx-auto gap-x-12 gap-y-0">
+    <div className="flex justify-between w-11/12 max-w-[1160px] py-12 mx-auto gap-x-12 gap-y-0 mt-[100px]">
       {/* <div className='flex flex-col ml-0 items-start w-11/12 max-w-[450px]'>
         <h1 className='text-black font-semibold text-[1.875rem] leading-[2.375rem] font-serif '>Sign Up pages</h1>
         <p className='text-[1.125rem] leading-[1.625rem] mt-4 flex flex-col items-start'>
@@ -234,6 +235,9 @@ export const Signup = ({ setISLoggedIn }) => {
             <p>Sign Up with Google</p>
           </button>
         </form>
+      </div>
+      <div className=" flex justify-end mt-[100px] animate-pulse transition-all ease-in-out w-[500px] h-[300px]">
+        <img src={youtube} ></img>
       </div>
     </div>
     // </div>
