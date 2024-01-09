@@ -9,7 +9,7 @@ export const Login = (props) => {
   const setISLoggedIn = props.setISLoggedIn;
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState (false);
-  const [formData, setFormData] = useState({
+  const [formData,setFormData] = useState({
     email: "",
     password: ""
   });
@@ -23,10 +23,35 @@ export const Login = (props) => {
   }
   function submitHandler (event){
     event.preventDefault();
-    setISLoggedIn(true);
-    toast.success("Logged in Successfullyy!!");
-    navigate("/dashboard");
+    checkEmployee(formData);
   }
+
+  const checkEmployee=async(data)=>{
+    await fetch(
+      `${process.env.REACT_APP_BASE_URL}/login`,
+
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ ...data }),
+      }
+     ).then((res)=>{
+      return res.json();
+     }).then((data)=>{
+      console.log(data);
+      if(data.success){
+      toast.success(data.message);
+      setISLoggedIn(true);
+      navigate("/dashboard");
+      }
+      else{
+        toast.error(data.message);
+      }
+     })
+  }
+
   return (
     <div className='flex justify-between w-11/12 max-w-[1160px] py-12 mx-auto gap-x-12 gap-y-0'>
 
