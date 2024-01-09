@@ -43,7 +43,7 @@ export const Signup = ({ setISLoggedIn }) => {
 
 //   Connect to Backend
     const createEmployee = async (finaldata) => {
-    const response = await fetch(
+    await fetch(
       `${process.env.REACT_APP_BASE_URL}/signup`,
 
       {
@@ -54,19 +54,22 @@ export const Signup = ({ setISLoggedIn }) => {
         body: JSON.stringify({ ...finaldata }),
       }
      )
-    //  .then((res)=>{console.log("Res")})
-    // .catch((err) => {console.log("error are",err)});
-
-
-    console.log(response);
-    if(response.ok){
-    toast.success("Your account is created");
-    // setISLoggedIn(true);
-    navigate("/login");
-    }
-    else{
-      toast.error("Signup failed");
-    }
+     .then((res)=>{
+      return res.json();
+     })
+     .then((result) => {
+      console.log(result.message);
+      console.log(result);
+      if(result.success){
+        toast.success(result.message);
+        setISLoggedIn(true);
+        navigate("/login");
+        }
+        else{
+          toast.error(result.message);
+        }
+    })
+    .catch((err) => {console.log("error are",err)});   
   };
 
   return (
