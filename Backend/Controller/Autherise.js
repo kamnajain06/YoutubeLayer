@@ -44,13 +44,31 @@ exports.signup=async(req,res)=>{
         accountType,
         image: `https://api.dicebear.com/5.x/initials/svg?seed=${firstName}${lastName}`
       });
-      
-      console.log(newUser);
-     return res.status(200).json({
-        success: true,
-        message:"User Signed in successfully"
-     })
+      const existUser = await User.findOne({ email });
 
+      const payload = {
+        email: existUser.email,
+        accountType: existUser.accountType,
+        id: existUser._id,
+      };
+      const token = jwt.sign(payload, process.env.JWT_SECRET, {
+        expiresIn: "2h",
+      });
+      existUser.token = token;
+      existUser.password = undefined;
+  
+      const options = {
+        expires: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000),
+        httpOnly: true,
+      };
+      return res.cookie("token", token, options).status(200).json({
+        success: true,
+        message: 'Login successful',
+        token,
+        existUser,
+      });
+
+      
   }
   catch(e){
     return res.status(400).json({
@@ -81,7 +99,7 @@ exports.login=async(req,res)=>{
         });
       }
   
-         console.log("1")
+
 
       if (!await bcrypt.compare(password, existUser.password)) {
         return res.status(404).json({
@@ -90,7 +108,7 @@ exports.login=async(req,res)=>{
         });
       }
 
-      console.log("2")
+
   
       const payload = {
         email: existUser.email,
@@ -101,7 +119,6 @@ exports.login=async(req,res)=>{
         expiresIn: "2h",
       });
   
-      // No need for existUser.toObject();, remove this line
   
       existUser.token = token;
       existUser.password = undefined;
