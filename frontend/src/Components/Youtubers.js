@@ -1,6 +1,8 @@
 import React from 'react'
 
 const Youtubers = () => {
+
+    function getYoutuberData(){
         if(User.accountType==='Youtuber'){
             let youtuberData =[];
             Object.values(User).forEach((accountType)=> {
@@ -11,6 +13,8 @@ const Youtubers = () => {
             console.log(youtuberData);
             return youtuberData;
         }
+        return [];
+    }
 
     const myYoutuberData = getYoutuberData();
 
@@ -25,7 +29,7 @@ const Youtubers = () => {
             <table>
                 <tbody>
                     {
-                        myYoutuberData.map.((youtuber)=> (
+                        myYoutuberData.map((youtuber)=> (
                             <tr key={`${youtuber.firstName} && ${youtuber.lastName}}`}>
                                 <td>
                                     <div>
@@ -35,14 +39,14 @@ const Youtubers = () => {
                                         <div>
                                             <div>
                                                 <div>
-                                                    {person.firstName}
+                                                    {youtuber.firstName}
                                                 </div>
                                                 <div>
-                                                    {person.lastName}
+                                                    {youtuber.lastName}
                                                 </div>
                                             </div>
                                             <div>
-                                                {person.email}
+                                                {youtuber.email}
                                             </div>
                                         </div>
                                     </div>
