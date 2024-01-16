@@ -4,11 +4,14 @@ import Cards from '../Components/Cards';
 import { FaSquarePlus } from "react-icons/fa6";
 import CreateTask from '../Components/CreateTask';
 import { useEffect } from 'react';
+import { Navigate, useNavigate } from 'react-router-dom';
+import Youtubers from '../Components/Youtubers';
 
 export const Dashboard = () => {
   const [category, setCategory] = useState('All');
   let [count, setCount] = useState(0);
   const [showTask, setShowTask] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     console.log("Printing inside useEffect")
@@ -25,6 +28,7 @@ export const Dashboard = () => {
     // console.log("Printing in ending of createHandler");
     // console.log(count);
     // console.log(showTask);
+    navigate('/dashboard');
   }
 
   return (
@@ -40,7 +44,7 @@ export const Dashboard = () => {
             </div>
           )
         }
-        <div className='flex justify-center items-center h-[10vh] mt-[200px] w-2/6 mx-auto '>
+        <div className='flex justify-center items-center h-[10vh] mt-[200px] w-8/12 mx-auto '>
           {
             (
               count === 0 ?(
@@ -51,12 +55,14 @@ export const Dashboard = () => {
                   </button>
                 </div>
               ): 
-              showTask ? (<CreateTask></CreateTask>)  : (<Cards></Cards>)
+              showTask ? (<CreateTask setShowTask={setShowTask}></CreateTask>)  : (<Cards></Cards>)
             )
           }
         </div>
       </div>
-      <div className='border-left border-white w-4/12 h-full'></div>
+      <div className='border-left border-white w-4/12 h-full'>
+        <Youtubers></Youtubers>
+      </div>
     </div>
   )
 }

@@ -3,7 +3,7 @@ import { useState } from 'react'
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 
-const CreateTask = () => {
+const CreateTask = ({setShowTask}) => {
 
     const navigate = useNavigate();
     
@@ -28,7 +28,7 @@ const CreateTask = () => {
         console.log(taskData);
         toast.success("Task Created");
         navigate('/dashboard');
-        // setShowTask(false);
+        setShowTask(false);
     }
 
     return (
@@ -80,6 +80,7 @@ const CreateTask = () => {
                             <label 
                             className='text-white '
                             htmlFor="vidDesc">Description:</label>
+                            <br></br>
                             <textarea className='mt-[7px] rounded-md p-[6px]'
                             name='vidDesc'
                             id='vidDesc' 
