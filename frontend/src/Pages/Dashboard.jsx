@@ -1,0 +1,64 @@
+import React from 'react';
+import { useState } from 'react';
+import Cards from '../Components/Cards';
+import { FaSquarePlus } from "react-icons/fa6";
+import CreateTask from '../Components/CreateTask';
+import { useEffect } from 'react';
+
+export const Dashboard = () => {
+  const [category, setCategory] = useState('All');
+  let [count, setCount] = useState(0);
+  const [showTask, setShowTask] = useState(false);
+
+  useEffect(() => {
+    console.log("Printing inside useEffect")
+    console.log(showTask);
+    console.log(count);
+  },[])
+
+  const createHandler = () => {
+    // console.log("Printing in starting of createHandler");
+    // console.log(showTask);
+    // console.log(count);
+    setShowTask(true);
+    setCount(++count);
+    // console.log("Printing in ending of createHandler");
+    // console.log(count);
+    // console.log(showTask);
+  }
+
+  return (
+    <div className='text-white flex justify-center items-center h-[80vh] mt-[100px] w-full '>
+      <div className='border-r border-white w-8/12 h-full '> 
+        {
+          !showTask && 
+          (
+            <div className='gap-x-16 flex flex-row justify-center mt-[20px] '>
+              <button onClick={() => setCategory('All')} className='bg-white p-[3px] rounded-md text-black text-md w-[100px] gap-x-4'>All</button>
+              <button onClick={() => setCategory('Pending')} className='bg-white p-[3px] rounded-md text-black text-md w-[100px] gap-x-4'>Pending</button>
+              <button onClick={() => setCategory('Done')} className='bg-white p-[3px] rounded-md text-black text-md w-[100px] gap-x-4'>Done</button>
+            </div>
+          )
+        }
+        <div className='flex justify-center items-center h-[10vh] mt-[200px] w-2/6 mx-auto '>
+          {
+            (
+              count === 0 ?(
+              <div className='text-3xl flex gap-x-4 relative justify-center space-x-2 items-center '>
+                  No tasks yet 
+                  <button onClick={createHandler} className='text-3xl px-1 cursor-pointer'>
+                    <FaSquarePlus />
+                  </button>
+                </div>
+              ): 
+              showTask ? (<CreateTask></CreateTask>)  : (<Cards></Cards>)
+            )
+          }
+        </div>
+      </div>
+      <div className='border-left border-white w-4/12 h-full'></div>
+    </div>
+  )
+}
+
+

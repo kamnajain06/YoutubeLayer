@@ -16,7 +16,7 @@ const[isLoggedIn,setISLoggedIn]=useState(false);
 
   return (
     <div className='bg-slate-950 w-screen h-screen text-white flex flex-col'>
-      <Navbar isLoggedIn={isLoggedIn} setISLoggedIn={setISLoggedIn}/>
+      <Navbar isLoggedIn={isLoggedIn} setISLoggedIn={setISLoggedIn} />
       <Routes>
         <Route path='/' element={<MainHeader></MainHeader>}>
           <Route path="/" element={<Home setISLoggedIn={setISLoggedIn}/>}/>
@@ -24,9 +24,7 @@ const[isLoggedIn,setISLoggedIn]=useState(false);
           <Route path="/login" element={<Login setISLoggedIn={setISLoggedIn}/>}/>
           <Route path="/signup" element={<Signup setISLoggedIn={setISLoggedIn}/>}/>
           <Route path="/dashboard" element={
-            <PrivateRoute isLoggedIn={isLoggedIn}>
-              <Dashboard/>
-            </PrivateRoute>
+            <Dashboard></Dashboard>
         }/>
         </Route>
       </Routes>
