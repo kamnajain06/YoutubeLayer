@@ -5,6 +5,10 @@ const Card = (props) => {
   const ytVidName = props.data.ytVidName;
   const ytVidCategory = props.data.ytCategory;
   const ytVidDescription = props.data.ytVidDescription;
+  const ytImage='';
+  const ytFirstName='';
+  const ytLastName='';
+
   const savedAccount = localStorage.getItem("accountType");
     let YouTuber = false;
     let editor=false;
@@ -28,9 +32,26 @@ const Card = (props) => {
             <h2 className="text-red-400">{ytVidCategory}</h2>
           </div>
         </div>
+        <div>
+          {
+            YouTuber &&
+            <div className="flex">
+              <div>
+                <img src={ytImage}></img>
+              </div>
+              <div>
+                <h2>{ytFirstName}</h2>
+              </div>
+              <div>
+                <h2>{ytLastName}</h2>
+              </div>
+            </div>
+          }
+        </div>
         <div className="flex flex-wrap py-6 ">
           <h3 className=" text-xs text-gray-300">{ytVidDescription}</h3>
         </div>
+        
         {/* button */}
         <div className="flex flex-col gap-1.5">
         { editor &&
