@@ -3,16 +3,21 @@ import toast from 'react-hot-toast';
 import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import {AiOutlineEyeInvisible,AiOutlineEye} from 'react-icons/ai'
+import axios from 'axios'
+import { useToken } from '../context/tokenContext';
 
 export const Login = (props) => {
 
   const setISLoggedIn = props.setISLoggedIn;
   const navigate = useNavigate();
+  const [accountType, setAccountType] = useState("YouTuber");
   const [showPassword, setShowPassword] = useState (false);
   const [formData,setFormData] = useState({
     email: "",
     password: ""
   });
+  const { setToken } = useToken();
+
   function changeHandler(event){
     setFormData((prev) => {
       return {
@@ -21,41 +26,38 @@ export const Login = (props) => {
       }
     })
   }
-  function submitHandler (event){
-    event.preventDefault();
-    checkEmployee(formData);
-  }
 
-  const checkEmployee=async(data)=>{
-    await fetch(
-      `${process.env.REACT_APP_BASE_URL}/login`,
-
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ ...data }),
-      }
-     ).then((res)=>{
-      return res.json();
-     }).then((data)=>{
-      console.log(data);
-      if(data.success){
-      toast.success(data.message);
-      setISLoggedIn(true);
-      navigate("/dashboard");
+  const submitHandler = async (event)=>{
+    try{
+      event.preventDefault();
+      const res =await axios.post(`${process.env.REACT_APP_BASE_URL}/login`,formData);
+      if(res.data.success){
+        toast.success("Login");
+        setToken(res.data.token);
+        localStorage.setItem("accountType", res.data.existUser.accountType);
+        localStorage.setItem("token",res.data.token);
+        localStorage.setItem("image",res.data.existUser.image);
+        
+        if(res.data.existUser.accountType === "YouTuber"){
+          navigate("/dashboard");
+        }
+        else{
+          navigate("/editorDashboard");
+        } 
       }
       else{
-        toast.error(data.message);
-      }
-     })
-  }
+        toast.error(res.data.message);
+      }  
+    }
+    catch(error){
+      console.error("Error during login:",error);
+    }
+  };
 
   return (
     <div className='flex justify-center w-11/12 max-w-[1160px] py-12 mx-auto gap-x-12 gap-y-0 mt-[200px]'>
 
-      <form onSubmit={submitHandler} className='w-[400px]'>
+      <form onSubmit={(event) => submitHandler(event)} className='w-[400px]'>
         <div className='flex justify-between gap-2 flex-col'>
         <label className='w-full flex flex-col items-start relative mt-1'>
           <p className='text-[0.875rem] text-gray-50 mb-1 leading-[1.375rem] ml-2'>Email Address <span className='text-red-500'>*</span></p>

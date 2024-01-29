@@ -17,8 +17,9 @@ export const Signup = ({ setISLoggedIn }) => {
   });
   const [showPassword, setShowPassword] = useState(false);
   const [showPassword1, setShowPassword1] = useState(false);
-  const [accountType, setAccountType] = useState("YouTuber");
+  const [accountType, setAccountType] = useState("YouTuber"); 
 
+  
   function changeHandler(event) {
     setFormdata((prevData) => ({
       ...prevData,
@@ -40,13 +41,13 @@ export const Signup = ({ setISLoggedIn }) => {
     };
     createEmployee(finaldata);
   }
-
-
-//   Connect to Backend
-    const createEmployee = async (finaldata) => {
+  
+  
+  //   Connect to Backend
+  const createEmployee = async (finaldata) => {
     await fetch(
       `${process.env.REACT_APP_BASE_URL}/signup`,
-
+      
       {
         method: "POST",
         headers: {
@@ -54,66 +55,64 @@ export const Signup = ({ setISLoggedIn }) => {
         },
         body: JSON.stringify({ ...finaldata }),
       }
-     )
-     .then((res)=>{
-      return res.json();
-     })
-     .then((result) => {
-      console.log(result.message);
-      console.log(result);
-      if(result.success){
-        toast.success(result.message);
-        setISLoggedIn(true);
-        navigate("/login");
+      )
+      .then((res)=>{
+        return res.json();
+      })
+      .then((result) => {
+        console.log(result.message);
+        console.log(result);
+        if(result.success){
+          toast.success(result.message);
+          setISLoggedIn(true);
+          console.log("Inside Signup",result);
+          console.log(result.existUser.accountType);
+          localStorage.setItem("accountType", result.existUser.accountType);
+          localStorage.setItem("token",result.token);
+          localStorage.setItem("image",result.existUser.image);
+
+          result.existUser.accountType==="YouTuber" ? navigate("/dashboard"): navigate("/editorDashboard");
         }
         else{
           toast.error(result.message);
         }
-    })
-    .catch((err) => {console.log("error are",err)});   
-  };
+      })
+      .catch((err) => {console.log("error are",err)});   
+    };
+    
+    return (
+      <div className="flex justify-between w-11/12 max-w-[1160px] py-12 mx-auto gap-x-12 gap-y-0 mt-[100px]">
 
-  return (
-    <div className="flex justify-between w-11/12 max-w-[1160px] py-12 mx-auto gap-x-12 gap-y-0 mt-[100px]">
-      {/* <div className='flex flex-col ml-0 items-start w-11/12 max-w-[450px]'>
-        <h1 className='text-black font-semibold text-[1.875rem] leading-[2.375rem] font-serif '>Sign Up pages</h1>
-        <p className='text-[1.125rem] leading-[1.625rem] mt-4 flex flex-col items-start'>
-            <span className='text-black'>Ajjao Bhai</span>
-            
-            <span className='text-green italic'>Ha bna le tu project</span>
-        </p> */}
-      {/* formtype="signup"
-        setISLoggedIn={setISLoggedIn} */}
       <div className="w-11/12 max-w-[450px]">
         <div
           className="flex rounded-full bg-gray-800 p-1
-    gap-x-1 my-6 max-w-max "
-        >
+          gap-x-1 my-6 max-w-max "
+          >
           <button
             className={`${
               accountType === "YouTuber"
-                ? "bg-gray-950 text-white"
-                : "bg-transparent text-gray-200"
+              ? "bg-gray-950 text-white"
+              : "bg-transparent text-gray-200"
             }
-        py-2 px-5 rounded-full transitiion-all duration-100`}
+            py-2 px-5 rounded-full transitiion-all duration-100`}
             onClick={() => {
               setAccountType("YouTuber");
             }}
-          >
+            >
             YouTuber
           </button>
 
           <button
             className={`${
               accountType === "Editor"
-                ? "bg-gray-900 text-gray-50 "
-                : "bg-transparent text-gray-200"
+              ? "bg-gray-900 text-gray-50 "
+              : "bg-transparent text-gray-200"
             } 
-        py-2 px-5 rounded-full transitiion-all duration-200`}
+            py-2 px-5 rounded-full transitiion-all duration-200`}
             onClick={() => {
               setAccountType("Editor");
             }}
-          >
+            >
             Editor
           </button>
         </div>
@@ -131,7 +130,7 @@ export const Signup = ({ setISLoggedIn }) => {
                 placeholder="Enter First Name"
                 value={formData.firstName}
                 className="bg-gray-800 rounded-[0.5rem] text-gray-50 p-[12px] w-full h-10 border-b-2 border-b-blue-200"
-              />
+                />
             </label>
 
             <label className="w-full flex flex-col items-start relative mt-1">
@@ -146,7 +145,7 @@ export const Signup = ({ setISLoggedIn }) => {
                 placeholder="Enter Last Name"
                 value={formData.lastName}
                 className="bg-gray-800 rounded-[0.5rem] text-gray-50 p-[12px] w-full h-10 border-b-2 border-b-blue-200"
-              />
+                />
             </label>
           </div>
           {/* email  */}
@@ -237,9 +236,9 @@ export const Signup = ({ setISLoggedIn }) => {
         </form>
       </div>
       <div className=" flex justify-end mt-[100px] animate-pulse transition-all ease-in-out w-[500px] h-[300px]">
-        <img src={youtube} ></img>
+        <img src={youtube} alt="youtube"></img>
       </div>
     </div>
-    // </div>
+
   );
 };

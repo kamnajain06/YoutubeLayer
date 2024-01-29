@@ -1,70 +1,133 @@
-import React from 'react';
-import { useState } from 'react';
-import Cards from '../Components/Cards';
+import React from "react";
+import { useState } from "react";
+import Cards from "../Components/Cards";
 import { FaSquarePlus } from "react-icons/fa6";
-import CreateTask from '../Components/CreateTask';
-import { useEffect } from 'react';
-import { Navigate, useNavigate } from 'react-router-dom';
-import Youtubers from '../Components/Youtubers';
+import CreateTask from "../Components/CreateTask";
+import { useEffect } from "react";
+import { Navigate, useNavigate } from "react-router-dom";
+import Editor from "../Components/Editor";
+import { useToken } from "../context/tokenContext";
 
-export const Dashboard = () => {
-  const [category, setCategory] = useState('All');
+export const Dashboard = (props) => {
+  const setISLoggedIn = props.setISLoggedIn;
+  const [category, setCategory] = useState("All");
   let [count, setCount] = useState(0);
   const [showTask, setShowTask] = useState(false);
   const navigate = useNavigate();
+  const [fetchData, setFetchData] = useState({ allEditor: [] });
+  useEffect(() => {}, []);
 
   useEffect(() => {
-    console.log("Printing inside useEffect")
-    console.log(showTask);
-    console.log(count);
-  },[])
+    const savedAccount = localStorage.getItem("accountType");
+    if (savedAccount === "YouTuber") {
+      setISLoggedIn(true);
+      navigate("/dashboard");
+    }
+  }, []);
 
   const createHandler = () => {
-    // console.log("Printing in starting of createHandler");
-    // console.log(showTask);
-    // console.log(count);
+    console.log("click to ");
+    console.log(showTask);
     setShowTask(true);
+    console.log(showTask);
     setCount(++count);
-    // console.log("Printing in ending of createHandler");
-    // console.log(count);
-    // console.log(showTask);
-    navigate('/dashboard');
-  }
+    navigate("/dashboard");
+  };
+
+  const callFun = async (req, res) => {
+    try {
+      const response = await fetch(
+        `${process.env.REACT_APP_BASE_URL}/getEdAllDetail`,
+        {
+          method: "GET",
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch data");
+      }
+
+      const result = await response.json();
+      setFetchData(result);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    callFun();
+  }, []);
 
   return (
-    <div className='text-white flex justify-center items-center h-[80vh] mt-[100px] w-full '>
-      <div className='border-r border-white w-8/12 h-full '> 
+    <div className=" text-white flex justify-center items-center h-[80vh] mt-[100px] w-full ">
+      <div className="w-10/12 h-full ">
         {
-          !showTask && 
-          (
-            <div className='gap-x-16 flex flex-row justify-center mt-[20px] '>
-              <button onClick={() => setCategory('All')} className='bg-white p-[3px] rounded-md text-black text-md w-[100px] gap-x-4'>All</button>
-              <button onClick={() => setCategory('Pending')} className='bg-white p-[3px] rounded-md text-black text-md w-[100px] gap-x-4'>Pending</button>
-              <button onClick={() => setCategory('Done')} className='bg-white p-[3px] rounded-md text-black text-md w-[100px] gap-x-4'>Done</button>
+          <div className="gap-x-16 flex flex-row justify-center mt-[20px] ">
+            <button
+              onClick={() => setCategory("All")}
+              className="bg-white p-[3px] rounded-md text-black text-md w-[100px] gap-x-4"
+            >
+              All
+            </button>
+            <button
+              onClick={() => setCategory("Pending")}
+              className="bg-white p-[3px] rounded-md text-black text-md w-[100px] gap-x-4"
+            >
+              Pending
+            </button>
+            <button
+              onClick={() => setCategory("Done")}
+              className="bg-white p-[3px] rounded-md text-black text-md w-[100px] gap-x-4"
+            >
+              Done
+            </button>
+            <div className="flex gap-2">
+              {" "}
+              Create Task
+              <button
+                onClick={createHandler}
+                className="text-3xl px-1 cursor-pointer"
+              >
+                <FaSquarePlus />
+              </button>
             </div>
-          )
+          </div>
         }
-        <div className='flex justify-center items-center h-[10vh] mt-[200px] w-8/12 mx-auto '>
-          {
-            (
-              count === 0 ?(
-              <div className='text-3xl flex gap-x-4 relative justify-center space-x-2 items-center '>
-                  No tasks yet 
-                  <button onClick={createHandler} className='text-3xl px-1 cursor-pointer'>
-                    <FaSquarePlus />
-                  </button>
-                </div>
-              ): 
-              showTask ? (<CreateTask setShowTask={setShowTask}></CreateTask>)  : (<Cards></Cards>)
-            )
-          }
+        {/* <div className="flex justify-center items-center h-full  mt-[10px] w-full mx-auto px-5 ">
+          {count === 0 ? (
+            <div className="text-3xl flex gap-x-4 relative justify-center space-x-2 items-center ">
+              Create Your Task Here...
+              <button
+                onClick={createHandler}
+                className="text-3xl px-1 cursor-pointer"
+              >
+                <FaSquarePlus />
+              </button>
+            </div>
+          ) : showTask ? (
+            <CreateTask setShowTask={setShowTask}></CreateTask>
+          ) : (
+            <Cards></Cards>
+          )}
+        </div> */}
+
+        {
+          <div className="flex justify-center items-center h-full  mt-[10px] w-full mx-auto px-5 ">
+            {showTask ? (
+              <CreateTask setShowTask={setShowTask}></CreateTask>
+            ) : (
+              <Cards></Cards>
+            )}
+          </div>
+        }
+      </div>
+      <div className="border-left border-white w-4/12 h-full">
+        <div className=" h-full w-[85%] mx-auto flex-col overflow-y-scroll">
+          {fetchData?.allEditor.map((data, index) => {
+            return <Editor data={data} key={index}></Editor>;
+          })}
         </div>
       </div>
-      <div className='border-left border-white w-4/12 h-full'>
-        <Youtubers></Youtubers>
-      </div>
     </div>
-  )
-}
-
-
+  );
+};
