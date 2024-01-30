@@ -20,7 +20,7 @@ const CreateTask = ({ setShowTask }) => {
   const [taskData, setTaskData] = useState({
     fileUrl: "",
     vidName: "",
-    category: "",
+    category: "Other",
     vidDesc: "",
   });
   
@@ -133,7 +133,7 @@ const CreateTask = ({ setShowTask }) => {
             <div className="flex flex-col">
               <div className="mb-[17px]">
                 <label className="text-white " htmlFor="category">
-                  Category:{" "}
+                  Category:{"Other"}
                 </label>
                 <select
                   name="category"
@@ -142,11 +142,11 @@ const CreateTask = ({ setShowTask }) => {
                   id="category"
                   className="rounded-md p-[5px] ml-[6px]"
                 >
+                  <option value="Other">Other</option>
                   <option value="Gaming">Gaming</option>
                   <option value="Food Vlogs">Food Vlogs</option>
                   <option value="Technology">Technology</option>
                   <option value="Education">Education</option>
-                  <option value="Other">Other</option>
                 </select>
               </div>
               <div>

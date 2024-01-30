@@ -17,6 +17,11 @@ const YtSchema = new mongoose.Schema({
     },
     userId:{
       type:String,
+    },
+    status:{
+      type:String,
+      default:"All",
+      enum:["All","Pending","Assigned","Done"]
     }
 
 })

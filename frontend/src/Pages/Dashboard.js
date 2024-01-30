@@ -76,6 +76,12 @@ export const Dashboard = (props) => {
               Pending
             </button>
             <button
+              onClick={() => setCategory("Pending")}
+              className="bg-white p-[3px] rounded-md text-black text-md w-[100px] gap-x-4"
+            >
+              Assigned
+            </button>
+            <button
               onClick={() => setCategory("Done")}
               className="bg-white p-[3px] rounded-md text-black text-md w-[100px] gap-x-4"
             >
