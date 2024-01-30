@@ -54,3 +54,28 @@ exports.getYtAllDetail = async(req,res)=>{
     }
    
 }
+
+
+
+
+exports.getUserDetails=async(req,res)=>{
+    try{
+        console.log("This is User Details")
+       const {userId}= req.body;
+       console.log("1st")
+       const data = await User.findById(userId);
+       console.log("2nd")
+       return res.status(200).json({
+        success:true,
+        data,
+        message: "User data retrieved successfully"
+       })
+    }
+    catch(err)
+    {
+        return result.status(200).json({
+            success:false,
+            message: "User data not retrieved "
+           })
+    }
+}

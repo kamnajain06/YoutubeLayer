@@ -31,6 +31,7 @@ export const Login = (props) => {
     try{
       event.preventDefault();
       const res =await axios.post(`${process.env.REACT_APP_BASE_URL}/login`,formData);
+      console.log("Response",res)
       if(res.data.success){
         toast.success("Login");
         setToken(res.data.token);
@@ -46,11 +47,11 @@ export const Login = (props) => {
         } 
       }
       else{
-        toast.error(res.data.message);
       }  
     }
     catch(error){
       console.error("Error during login:",error);
+      toast.error(error.response.data.message);
     }
   };
 
