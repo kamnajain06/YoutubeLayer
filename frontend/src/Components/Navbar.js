@@ -47,7 +47,7 @@ export const Navbar = (props) => {
                         {isLoggedIn && editor &&
                             <NavLink to="/editorDashboard">
                                 <button className='text-white px-[12px] focus:bg-white focus:text-black rounded-[8px] cursor-pointer hover:bg-white hover:text-black transition-all duration-100'>
-                                EditorDashboard
+                                Editor Dashboard
                                 </button>
                             </NavLink>
                         }

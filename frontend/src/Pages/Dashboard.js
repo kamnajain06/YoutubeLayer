@@ -59,7 +59,7 @@ export const Dashboard = (props) => {
   }, []);
 
   return (
-    <div className=" text-white flex justify-center items-center h-[80vh] mt-[100px] w-full ">
+    <div className=" text-white flex justify-center items-center h-[80vh] mt-[100px] w-full px-[20px]">
       <div className="w-10/12 h-full ">
         {
           <div className="gap-x-16 flex flex-row justify-center mt-[20px] ">

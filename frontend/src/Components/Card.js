@@ -1,4 +1,5 @@
 import React,{useEffect, useState} from "react";
+import "./Card.css"
 
 const Card = (props) => {
   const ytUrl = props.data.ytfileUrl;
@@ -10,16 +11,30 @@ const Card = (props) => {
   const [ytImage,setYtImage]=useState("");
   const [ytFirstName,setYtFirstName]=useState("");
   const [ytLastName,setYtLastName]=useState(""); 
-
+  const [isClicked, setIsClicked]= useState(false);
+  const [readMore, setReadMore] = useState(false);
+  
   const savedAccount = localStorage.getItem("accountType");
-    let YouTuber = false;
-    let editor=false;
-    savedAccount === "YouTuber" ? (YouTuber = true):(editor = true);
-    function clickHandler() {
+  let YouTuber = false;
+  let editor=false;
+  savedAccount === "YouTuber" ? (YouTuber = true):(editor = true);
+  
+  // useEffect(() => {
+  //   const storedIsClicked = localStorage.getItem('isClicked');
+  //   if (storedIsClicked) {
+  //     setIsClicked(JSON.parse(storedIsClicked));
+  //   }
+  // }, []);
 
+  function clickHandler(){
+    if(!isClicked){
+      setIsClicked(true);
     }
+  }
 
-
+  // useEffect(() => {
+  //   localStorage.setItem('isClicked', JSON.stringify(isClicked));
+  // }, [isClicked]);
 
     const callFun = async (req, res) => {
       try {
@@ -54,7 +69,7 @@ const Card = (props) => {
 
 
   return (
-    <div className="flex flex-col border border-white w-[300px] max-h-[400px] ">
+    <div className="flex flex-col border border-white w-[300px] max-h-[600px] ">
       <div>
           {
             editor &&
@@ -87,19 +102,36 @@ const Card = (props) => {
         </div>
         
         <div className="flex flex-wrap py-6 ">
-          <h3 className=" text-xs text-gray-300">{ytVidDescription}</h3>
+          <h3 className=" text-xs text-gray-300">
+            {
+              ytVidDescription.length > 100?
+              (
+                <div>
+                  {
+                    readMore? ytVidDescription : 
+                    ytVidDescription.slice(0,100) + "..." 
+                  }
+                  <button onClick={()=> setReadMore(!readMore)} className='text-blue-500'> {readMore? "Read Less" : "Read More"} </button>
+                </div>
+              ) : (ytVidDescription)
+            }
+          </h3>
         </div>
         
         {/* button */}
         <div className="flex flex-col gap-1.5">
         { editor &&
-            <div className="bg-gray-500 text-center rounded-md  p-1.5 text-black hover:font-bold hover:bg-gray-700 bg-fixed transition-all duration-200 ">
-            <button onClick={clickHandler}>Request</button>
+            <div >
+            <button onClick={clickHandler} className={`w-full bg-gray-500 text-center rounded-md  p-1.5 text-black hover:font-bold hover:bg-gray-700 bg-fixed transition-all duration-200 ${isClicked? "clicked" : ""}`}>
+                {
+                  isClicked == false ? "Request" : "Requested"
+                }
+            </button>
           </div>
         }
         <div className="flex gap-2 justify-around">
         {   YouTuber &&
-            <div className="w-[100px] bg-gray-500 text-center rounded-md  p-1.5 text-black hover:font-bold hover:bg-gray-700 bg-fixed transition-all duration-200 ">
+            <div className='w-[100px] bg-gray-500 text-center rounded-md  p-1.5 text-black hover:font-bold hover:bg-gray-700 bg-fixed transition-all duration-200 $'>
             <button>Approve</button>
           </div>
         }  

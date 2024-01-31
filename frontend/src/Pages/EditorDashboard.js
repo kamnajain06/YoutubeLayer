@@ -75,9 +75,9 @@ export const EditorDashboard = (props) => {
           !showTask && 
           (
             <div className='gap-x-16 flex flex-row justify-center mt-[20px] '>
-              <button onClick={() => setEditorCategory('All')} className='bg-white rounded-md text-black w-[50px] h-[40px]'>All</button>
-              <button onClick={() => setEditorCategory('Assigned')} className='bg-white p-[3px] rounded-md text-black text-md w-[100px] h-[40px]'>Assigned</button>
-              <button onClick={() => setEditorCategory('Done')} className='bg-white p-[3px] rounded-md text-black text-md w-[80px] h-[40px]'>Done</button>
+              <button onClick={() => setEditorCategory('All')} className='bg-white rounded-md text-black w-[50px] h-[30px]'>All</button>
+              <button onClick={() => setEditorCategory('Assigned')} className='bg-white p-[3px] rounded-md text-black text-md w-[100px] h-[30px]'>Assigned</button>
+              <button onClick={() => setEditorCategory('Done')} className='bg-white p-[3px] rounded-md text-black text-md w-[80px] h-[30px]'>Done</button>
               <div className="mb-[17px]">
                 <label className="text-white" htmlFor="category">
                   Category:-{" "}
