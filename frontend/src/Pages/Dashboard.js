@@ -9,6 +9,9 @@ import Editor from "../Components/Editor";
 import { useToken } from "../context/tokenContext";
 
 export const Dashboard = (props) => {
+
+  const [dashPage, setDashPage] = useState("All");
+
   const setISLoggedIn = props.setISLoggedIn;
   const [category, setCategory] = useState("All");
   let [count, setCount] = useState(0);
@@ -54,6 +57,12 @@ export const Dashboard = (props) => {
     }
   };
 
+  const setEditorPage =(event)=>{
+    console.log(event.target.value);
+    setDashPage(event.target.value);
+}
+
+
   useEffect(() => {
     callFun();
   }, []);
@@ -63,7 +72,7 @@ export const Dashboard = (props) => {
       <div className="w-10/12 h-full ">
         {
           <div className="gap-x-16 flex flex-row justify-center mt-[20px] ">
-            <button
+            {/* <button
               onClick={() => setCategory("All")}
               className="bg-white p-[3px] rounded-md text-black text-md w-[100px] gap-x-4"
             >
@@ -73,7 +82,7 @@ export const Dashboard = (props) => {
               onClick={() => setCategory("Pending")}
               className="bg-white p-[3px] rounded-md text-black text-md w-[100px] gap-x-4"
             >
-              Pending
+              Requested
             </button>
             <button
               onClick={() => setCategory("Pending")}
@@ -86,7 +95,11 @@ export const Dashboard = (props) => {
               className="bg-white p-[3px] rounded-md text-black text-md w-[100px] gap-x-4"
             >
               Done
-            </button>
+            </button> */}
+            <button onClick={setEditorPage} value="All" className='bg-white rounded-md text-black w-[50px] h-[30px]'>All</button>
+              <button onClick={setEditorPage} value="Requested" className='bg-white rounded-md text-black px-4 h-[30px]'>Requested</button>
+              <button onClick={setEditorPage} value="Assigned" className='bg-white p-[3px] rounded-md text-black text-md w-[100px] h-[30px]'>Assigned</button>
+              <button onClick={setEditorPage} value="Done" className='bg-white p-[3px] rounded-md text-black text-md w-[80px] h-[30px]'>Done</button>
             <div className="flex gap-2">
               {" "}
               Create Task
@@ -122,7 +135,7 @@ export const Dashboard = (props) => {
             {showTask ? (
               <CreateTask setShowTask={setShowTask}></CreateTask>
             ) : (
-              <Cards></Cards>
+              <Cards dashPage={dashPage}></Cards>
             )}
           </div>
         }

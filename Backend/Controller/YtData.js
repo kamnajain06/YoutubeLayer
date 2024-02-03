@@ -4,8 +4,9 @@ exports.getTaskData= async(req,res)=>{
     try{
         console.log("getTaskData Start");
         const {id}=req.user;
-        const data = await YtSchema.find({userId:id});
-        
+        const {status}=req.body;
+        // console.log(status);
+        const data = await YtSchema.find({userId:id,status:status});       
         return res.status(200).json({
             success:true,
             data,

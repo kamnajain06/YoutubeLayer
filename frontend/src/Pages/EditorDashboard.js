@@ -10,7 +10,7 @@ import Editor from "../Components/Editor";
 
 export const EditorDashboard = (props) => {
   const setISLoggedIn = props.setISLoggedIn
-  const [editorCategory, setEditorCategory] = useState('All');
+  const [edPage, setEdPage] = useState("All");
   let [count, setCount] = useState(0);
   const [showTask, setShowTask] = useState(false);
   const navigate = useNavigate();
@@ -19,7 +19,7 @@ export const EditorDashboard = (props) => {
 
 
   useEffect(() => {
-    console.log("Printing inside useEffect")
+
     console.log(showTask);
     console.log(count);
   },[])
@@ -40,15 +40,18 @@ export const EditorDashboard = (props) => {
   
   const changeHandler = (event) => {
     event.preventDefault();
-    setCategory(event.target.value);
-    console.log("Inside Handler",category)
+    // setCategory(event.target.value);
+    localStorage.setItem("category", event.target.value);
+    setCategory(localStorage.getItem("category"));
   }
-  
+
+  const setEditorPage =(event)=>{
+      // console.log(event.target.value);
+      setEdPage(event.target.value);
+  }
 
   const callFun = async (req, res) => {
     try {
-      const formData = new FormData();
-
       const response = await fetch(`${process.env.REACT_APP_BASE_URL}/getYtAllDetail`, {
         method: "GET",
         
@@ -66,8 +69,10 @@ export const EditorDashboard = (props) => {
   
   useEffect(() => {
     callFun();
+    setCategory(localStorage.getItem("category"));
   }, []);
-   console.log("outside",category)
+  // console.log("EdPage",edPage)
+
   return (
     <div className='text-white flex justify-center items-center h-[80vh] mt-[100px] w-full '>
       <div className='border-r border-white w-10/12 h-full '> 
@@ -75,9 +80,10 @@ export const EditorDashboard = (props) => {
           !showTask && 
           (
             <div className='gap-x-16 flex flex-row justify-center mt-[20px] '>
-              <button onClick={() => setEditorCategory('All')} className='bg-white rounded-md text-black w-[50px] h-[30px]'>All</button>
-              <button onClick={() => setEditorCategory('Assigned')} className='bg-white p-[3px] rounded-md text-black text-md w-[100px] h-[30px]'>Assigned</button>
-              <button onClick={() => setEditorCategory('Done')} className='bg-white p-[3px] rounded-md text-black text-md w-[80px] h-[30px]'>Done</button>
+              <button onClick={setEditorPage} value="All" className='bg-white rounded-md text-black w-[50px] h-[30px]'>All</button>
+              <button onClick={setEditorPage} value="Requested" className='bg-white rounded-md text-black px-4 h-[30px]'>Requested</button>
+              <button onClick={setEditorPage} value="Assigned" className='bg-white p-[3px] rounded-md text-black text-md w-[100px] h-[30px]'>Assigned</button>
+              <button onClick={setEditorPage} value="Done" className='bg-white p-[3px] rounded-md text-black text-md w-[80px] h-[30px]'>Done</button>
               <div className="mb-[17px]">
                 <label className="text-white" htmlFor="category">
                   Category:-{" "}
@@ -104,7 +110,7 @@ export const EditorDashboard = (props) => {
             (
               count === 0 ?(
               <div className='flex justify-center items-center h-full w-full mx-auto px-5 '>
-                  <EdCards category={category}></EdCards>
+                  <EdCards category={category} edPage={edPage}></EdCards>
                 </div>
               ): 
               showTask ? (<CreateTask setShowTask={setShowTask}></CreateTask>)  : (<EdCards category={category} ></EdCards>)

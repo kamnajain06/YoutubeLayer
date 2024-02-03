@@ -38,6 +38,9 @@ export const Login = (props) => {
         localStorage.setItem("accountType", res.data.existUser.accountType);
         localStorage.setItem("token",res.data.token);
         localStorage.setItem("image",res.data.existUser.image);
+        localStorage.setItem("category","All");
+        
+
         
         if(res.data.existUser.accountType === "YouTuber"){
           navigate("/dashboard");
