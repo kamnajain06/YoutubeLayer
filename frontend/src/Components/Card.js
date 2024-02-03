@@ -7,7 +7,9 @@ const Card = (props) => {
   const ytVidCategory = props.data.ytCategory;
   const ytVidDescription = props.data.ytVidDescription;
   const userId = props.data.userId;
-
+  const dashPage = localStorage.getItem('dashPage');
+  
+  const [refresh,setRefersh] =useState(false);
   const [ytImage,setYtImage]=useState("");
   const [ytFirstName,setYtFirstName]=useState("");
   const [ytLastName,setYtLastName]=useState(""); 
@@ -18,13 +20,7 @@ const Card = (props) => {
   let YouTuber = false;
   let editor=false;
   savedAccount === "YouTuber" ? (YouTuber = true):(editor = true);
-  
-  // useEffect(() => {
-  //   const storedIsClicked = localStorage.getItem('isClicked');
-  //   if (storedIsClicked) {
-  //     setIsClicked(JSON.parse(storedIsClicked));
-  //   }
-  // }, []);
+
 
   function clickHandler(){
     if(!isClicked){
@@ -32,9 +28,32 @@ const Card = (props) => {
     }
   }
 
-  // useEffect(() => {
-  //   localStorage.setItem('isClicked', JSON.stringify(isClicked));
-  // }, [isClicked]);
+
+   
+  async function RequestClickHandler(event) {
+    // console.log(event.target.value);
+    // console.log(props.data._id)
+
+    try {
+      const formData = new FormData();
+      formData.append("id",props.data._id);
+      formData.append("newStatus",event.target.value);
+      const response = await fetch(
+      `${process.env.REACT_APP_BASE_URL}/updateInCard`,
+      {
+        method: "POST",
+        body: formData
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error("Failed to fetch User Name");
+    }
+    const result = await response.json();
+  } catch (err) {
+    console.error(err);
+  }
+}
 
     const callFun = async (req, res) => {
       try {
@@ -68,6 +87,8 @@ const Card = (props) => {
 
 
 
+
+
   return (
     <div className="flex flex-col border border-white w-[300px] max-h-[600px] ">
       <div>
@@ -78,11 +99,9 @@ const Card = (props) => {
                 <img className="w-9 rounded-[50%]" src={ytImage}></img>
               </div>
               <div>
-                <h2>{ytFirstName} <spam>{ytLastName}</spam></h2>
+                <h2>{ytFirstName} <span>{ytLastName}</span></h2>
               </div>
-              {/* <div>
-                <h2>{ytLastName}</h2>
-              </div> */}
+
             </div>
           }
         </div>
@@ -118,11 +137,11 @@ const Card = (props) => {
           </h3>
         </div>
         
-        {/* button */}
+
         <div className="flex flex-col gap-1.5">
         { editor &&
             <div >
-            <button onClick={clickHandler} className={`w-full bg-gray-500 text-center rounded-md  p-1.5 text-black hover:font-bold hover:bg-gray-700 bg-fixed transition-all duration-200 ${isClicked? "clicked" : ""}`}>
+            <button value="Requested" onClick={RequestClickHandler} className={`w-full bg-gray-500 text-center rounded-md  p-1.5 text-black hover:font-bold hover:bg-gray-700 bg-fixed transition-all duration-200 ${isClicked? "clicked" : ""}`}>
                 {
                   isClicked == false ? "Request" : "Requested"
                 }
@@ -130,14 +149,14 @@ const Card = (props) => {
           </div>
         }
         <div className="flex gap-2 justify-around">
-        {   YouTuber &&
+        {   YouTuber && dashPage === "Requested" &&
             <div className='w-[100px] bg-gray-500 text-center rounded-md  p-1.5 text-black hover:font-bold hover:bg-gray-700 bg-fixed transition-all duration-200 $'>
-            <button>Approve</button>
+            <button value="Assigned" onClick={RequestClickHandler}>Approve</button>
           </div>
         }  
-        {   YouTuber &&
+        {   YouTuber && dashPage === "Requested" &&
             <div className="w-[100px] bg-gray-500 text-center rounded-md  p-1.5 text-black hover:font-bold hover:bg-gray-700 bg-fixed transition-all duration-200 ">
-            <button>Reject</button>
+            <button value="All" onClick={RequestClickHandler}>Reject</button>
           </div>
         }
           </div>

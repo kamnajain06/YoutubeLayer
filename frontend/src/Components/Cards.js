@@ -3,6 +3,9 @@ import Card from "./Card";
 import { useState, useEffect } from "react";
 
 const Cards = (props) => {
+  const dashPage = props.dashPage;
+  localStorage.setItem("dashPage",dashPage);
+
   const setCount = props.setCount;
   const [task, setTask] = useState({ data: [] });
   const [check, setCheck] = useState(false);
@@ -11,6 +14,8 @@ const Cards = (props) => {
     try {
       const formData = new FormData();
       formData.append("token", token);
+      formData.append("status", dashPage);
+
       const response = await fetch(
         `${process.env.REACT_APP_BASE_URL}/getTaskData`,
         {
@@ -26,10 +31,12 @@ const Cards = (props) => {
       const result = await response.json();
       console.log(result);
       setTask(result);
-      //  console.log("result",result)
-      // console.log("length of array",result.data.length);
+
       if (result.data.length === 0) {
         setCheck(true);
+      }
+      else{
+        setCheck(false);
       }
     } catch (err) {
       console.error(err);
@@ -38,7 +45,7 @@ const Cards = (props) => {
 
   useEffect(() => {
     callFun();
-  }, []);
+  }, [dashPage]);
 
   return (
     <div className="py-[40px] w-full h-full flex flex-wrap gap-8 overflow-y-scroll ">

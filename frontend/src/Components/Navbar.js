@@ -59,6 +59,7 @@ export const Navbar = (props) => {
                                     localStorage.removeItem("accountType")
                                     localStorage.removeItem("token")
                                     localStorage.removeItem("image")
+                                    localStorage.removeItem("category")
                                 }} className='text-white px-[12px] focus:bg-white focus:text-black rounded-[8px] mx-[10px] cursor-pointer hover:bg-white hover:text-black transition-all duration-100'>
                                 Log out
                                 </button>
