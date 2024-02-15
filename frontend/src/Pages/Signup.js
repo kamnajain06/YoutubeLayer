@@ -70,6 +70,9 @@ export const Signup = ({ setISLoggedIn }) => {
           localStorage.setItem("accountType", result.existUser.accountType);
           localStorage.setItem("token",result.token);
           localStorage.setItem("image",result.existUser.image);
+          localStorage.setItem("category","All");
+          localStorage.setItem("email",result.existUser.email);
+
 
           result.existUser.accountType==="YouTuber" ? navigate("/dashboard"): navigate("/editorDashboard");
         }

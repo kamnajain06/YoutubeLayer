@@ -6,6 +6,8 @@ const Cards = (props) => {
   const dashPage = props.dashPage;
   localStorage.setItem("dashPage",dashPage);
 
+  const [assignRefersh,setAssignRefersh] = useState(false);
+  const [refresh,setRefersh] = useState(false);
   const setCount = props.setCount;
   const [task, setTask] = useState({ data: [] });
   const [check, setCheck] = useState(false);
@@ -16,6 +18,7 @@ const Cards = (props) => {
       formData.append("token", token);
       formData.append("status", dashPage);
 
+      // console.log("In cards",assignEmail);
       const response = await fetch(
         `${process.env.REACT_APP_BASE_URL}/getTaskData`,
         {
@@ -29,7 +32,11 @@ const Cards = (props) => {
       }
 
       const result = await response.json();
-      console.log(result);
+      console.log("Cards Result",result);
+      // console.log("Cards Data",result.data[0]);
+      // console.log("Cards Data",result.data[0].requestedMail[0]);
+      // console.log("Cards Data",result.data[0].requestedMail[1]);
+      // console.log("Inside Cards",assignEmail);
       setTask(result);
 
       if (result.data.length === 0) {
@@ -45,7 +52,7 @@ const Cards = (props) => {
 
   useEffect(() => {
     callFun();
-  }, [dashPage]);
+  }, [dashPage,refresh,assignRefersh]);
 
   return (
     <div className="py-[40px] w-full h-full flex flex-wrap gap-8 overflow-y-scroll ">
@@ -53,7 +60,7 @@ const Cards = (props) => {
         <div className="text-3xl flex gap-x-4 relative justify-center space-x-2 items-center pl-[340px]">No Task Created Yet..</div>
       ) : (
         task?.data.map((data, index) => {
-          return <Card data={data} key={index}></Card>;
+          return <Card data={data} key={index} refresh={refresh} setRefersh={setRefersh} assignRefersh={assignRefersh} setAssignRefersh={setAssignRefersh}></Card>;
         })
       )}
     </div>
