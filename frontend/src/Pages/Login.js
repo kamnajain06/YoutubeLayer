@@ -39,6 +39,7 @@ export const Login = (props) => {
         localStorage.setItem("token",res.data.token);
         localStorage.setItem("image",res.data.existUser.image);
         localStorage.setItem("category","All");
+        localStorage.setItem("email",res.data.existUser.email);
         
 
         

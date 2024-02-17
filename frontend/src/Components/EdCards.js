@@ -4,11 +4,12 @@ import { useState, useEffect } from "react";
 
 const Cards = (props) => {
   
-  // const category = props.category;
+   const email= localStorage.getItem("email");
   const category = localStorage.getItem("category");
   const edPage = props.edPage;
-  console.log(edPage)
-
+  localStorage.setItem("edPage", edPage);
+  
+  const [refresh,setRefersh] = useState(false);
   const [task, setTask] = useState({ data: [] });
   const [check, setCheck] = useState(false);
   const callFun = async (req, res) => {
@@ -17,6 +18,8 @@ const Cards = (props) => {
         const formData = new FormData();
         formData.append("category",category)
         formData.append("status",edPage)
+        formData.append("email",email)
+
       const response = await fetch(
 
         `${process.env.REACT_APP_BASE_URL}/getAllTaskData`,
@@ -47,7 +50,7 @@ const Cards = (props) => {
 
   useEffect(() => {
     callFun();
-  }, [category,edPage]);
+  }, [category,edPage,refresh]);
 
   return (
     <div className="py-[40px] w-full h-full flex flex-wrap gap-8 overflow-y-scroll ">
@@ -55,7 +58,7 @@ const Cards = (props) => {
         <div className="text-3xl flex gap-x-4 relative justify-center space-x-2 items-center pl-[340px]">No Task Yet..</div>
       ) : (
         task?.data.map((data, index) => {
-          return <Card data={data} key={index}></Card>;
+          return <Card data={data} key={index} refresh={refresh} setRefersh={setRefersh}></Card>;
         })
       )}
     </div>

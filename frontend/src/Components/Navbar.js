@@ -13,7 +13,7 @@ export const Navbar = (props) => {
     let editor=false;
     savedAccount === "YouTuber" ? (YouTuber = true):(editor = true);
   return (
-    <div className=' overflow-hidden fixed right-0 left-0 top-3'>
+    <div className=' overflow-hidden fixed right-0 left-0 top-3 boarder-solid border-b border-grey-200 z-40 shadow-md shadow-red-300'>
             <div className="flex  justify-between items-center w-11/12 max-w-[1160px] mx-auto ">
                 <div className='  ' >
                     <NavLink to="/">
@@ -60,6 +60,9 @@ export const Navbar = (props) => {
                                     localStorage.removeItem("token")
                                     localStorage.removeItem("image")
                                     localStorage.removeItem("category")
+                                    localStorage.removeItem("dashPage")
+                                    localStorage.removeItem("edPage")
+                                    localStorage.removeItem("email")
                                 }} className='text-white px-[12px] focus:bg-white focus:text-black rounded-[8px] mx-[10px] cursor-pointer hover:bg-white hover:text-black transition-all duration-100'>
                                 Log out
                                 </button>
