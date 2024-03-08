@@ -3,8 +3,8 @@ import Card from "./Card";
 import { useState, useEffect } from "react";
 
 const Cards = (props) => {
-  
-   const email= localStorage.getItem("email");
+  const setAssignPage =props.setAssignPage;
+  const email= localStorage.getItem("email");
   const category = localStorage.getItem("category");
   const edPage = props.edPage;
   localStorage.setItem("edPage", edPage);
@@ -58,7 +58,7 @@ const Cards = (props) => {
         <div className="text-3xl flex gap-x-4 relative justify-center space-x-2 items-center pl-[340px]">No Task Yet..</div>
       ) : (
         task?.data.map((data, index) => {
-          return <Card data={data} key={index} refresh={refresh} setRefersh={setRefersh}></Card>;
+          return <Card data={data} key={index} refresh={refresh} setRefersh={setRefersh} setAssignPage={setAssignPage}></Card>;
         })
       )}
     </div>

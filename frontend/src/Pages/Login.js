@@ -4,7 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import {AiOutlineEyeInvisible,AiOutlineEye} from 'react-icons/ai'
 import axios from 'axios'
-import { useToken } from '../context/tokenContext';
+
 
 export const Login = (props) => {
 
@@ -16,7 +16,7 @@ export const Login = (props) => {
     email: "",
     password: ""
   });
-  const { setToken } = useToken();
+
 
   function changeHandler(event){
     setFormData((prev) => {
@@ -34,7 +34,7 @@ export const Login = (props) => {
       console.log("Response",res)
       if(res.data.success){
         toast.success("Login");
-        setToken(res.data.token);
+
         localStorage.setItem("accountType", res.data.existUser.accountType);
         localStorage.setItem("token",res.data.token);
         localStorage.setItem("image",res.data.existUser.image);

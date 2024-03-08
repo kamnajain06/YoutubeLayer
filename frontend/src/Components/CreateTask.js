@@ -43,7 +43,6 @@ const CreateTask = ({ setShowTask }) => {
         ...old,
         fileUrl: file,
       }));
-      // fileInput.current.value = file.name;
     }
   }
 
@@ -51,6 +50,7 @@ const CreateTask = ({ setShowTask }) => {
     event.preventDefault();
     setLoader(true);
     try {
+      console.log("TASK URL",taskData.fileUrl)
       const formData = new FormData();
       formData.append("ytfileUrl", taskData.fileUrl);
       formData.append("ytVidName", taskData.vidName);

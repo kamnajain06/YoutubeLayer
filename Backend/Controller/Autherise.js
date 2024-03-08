@@ -44,6 +44,7 @@ exports.signup=async(req,res)=>{
         accountType,
         image: `https://api.dicebear.com/5.x/initials/svg?seed=${firstName}${lastName}`
       });
+      
       const existUser = await User.findOne({ email });
 
       const payload = {

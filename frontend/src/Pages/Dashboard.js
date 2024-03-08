@@ -6,10 +6,13 @@ import CreateTask from "../Components/CreateTask";
 import { useEffect } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
 import Editor from "../Components/Editor";
-import { useToken } from "../context/tokenContext";
+import AssignedPage from "./AssignedPage";
+import { FaArrowLeft } from "react-icons/fa6";
+
 
 export const Dashboard = (props) => {
   const [dashPage, setDashPage] = useState("All");
+  const [assignPage,setAssignPage]= useState(false)
   const [allPage, setAllPage] = useState(true);
   const setISLoggedIn = props.setISLoggedIn;
   const [category, setCategory] = useState("All");
@@ -69,6 +72,15 @@ export const Dashboard = (props) => {
   return (
     <div>
       <div className="gap-x-16 flex flex-row justify-center mt-[100px] border-solid border border-red-300 py-5 ">
+      {
+              assignPage &&(<button
+                onClick={()=>{setAssignPage(false)}}
+                value="All"
+                className="bg-white absolute rounded-full left-10 text-gray w-[30px] h-[30px] text-3xl text-black"
+              >
+                <FaArrowLeft />
+              </button>)
+            }
         <button
           onClick={setEditorPage}
           value="All"
@@ -108,15 +120,16 @@ export const Dashboard = (props) => {
           </button>
         </div>
       </div>
-
-      <div className=" text-white flex justify-center items-center h-[80vh] mt-[30px] w-full px-[20px]">
+      {
+        !assignPage && (
+          <div className=" text-white flex justify-center items-center h-[80vh] mt-[30px] w-full px-[20px]">
         <div className="w-10/12 h-full ">
           {
             <div className="flex justify-center items-center h-full  mt-[10px] w-full mx-auto px-5 ">
               {showTask ? (
                 <CreateTask setShowTask={setShowTask}></CreateTask>
               ) : (
-                <Cards dashPage={dashPage}></Cards>
+                <Cards dashPage={dashPage} setAssignPage={setAssignPage}></Cards>
               )}
             </div>
           }
@@ -131,6 +144,13 @@ export const Dashboard = (props) => {
           </div>
         )}
       </div>
+        )
+      }
+      {assignPage && (
+        <div className="h-full"><AssignedPage setAssignPage={setAssignPage}></AssignedPage></div>
+          
+        )}
+      
     </div>
   );
 };

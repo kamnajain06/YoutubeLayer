@@ -189,3 +189,22 @@ exports.updateInCard = async (req, res) => {
     });
   }
 };
+
+exports.getCardDetail= async function(req, res) {
+  try{
+    console.log("1")
+    const {ytId}=req.body;
+    const result = await YtSchema.findById(ytId);
+    console.log("2")
+    return res.status(200).json({
+      success: true,
+      message: "Card found",
+      result
+    });
+  }catch(e){
+    return res.status(500).json({
+      success: false,
+      message: "Card not found",
+    });
+  }
+}

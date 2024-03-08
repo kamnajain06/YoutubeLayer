@@ -3,11 +3,12 @@ import Card from "./Card";
 import { useState, useEffect } from "react";
 
 const Cards = (props) => {
+  const setAssignPage = props.setAssignPage;
   const dashPage = props.dashPage;
-  localStorage.setItem("dashPage",dashPage);
+  localStorage.setItem("dashPage", dashPage);
 
-  const [assignRefersh,setAssignRefersh] = useState(false);
-  const [refresh,setRefersh] = useState(false);
+  const [assignRefersh, setAssignRefersh] = useState(false);
+  const [refresh, setRefersh] = useState(false);
   const setCount = props.setCount;
   const [task, setTask] = useState({ data: [] });
   const [check, setCheck] = useState(false);
@@ -32,7 +33,7 @@ const Cards = (props) => {
       }
 
       const result = await response.json();
-      console.log("Cards Result",result);
+      console.log("Cards Result", result);
       // console.log("Cards Data",result.data[0]);
       // console.log("Cards Data",result.data[0].requestedMail[0]);
       // console.log("Cards Data",result.data[0].requestedMail[1]);
@@ -41,8 +42,7 @@ const Cards = (props) => {
 
       if (result.data.length === 0) {
         setCheck(true);
-      }
-      else{
+      } else {
         setCheck(false);
       }
     } catch (err) {
@@ -52,15 +52,27 @@ const Cards = (props) => {
 
   useEffect(() => {
     callFun();
-  }, [dashPage,refresh,assignRefersh]);
+  }, [dashPage, refresh, assignRefersh]);
 
   return (
     <div className="py-[40px] w-full h-full flex flex-wrap gap-8 overflow-y-scroll ">
       {check ? (
-        <div className="text-3xl flex gap-x-4 relative justify-center space-x-2 items-center pl-[340px]">No Task Created Yet..</div>
+        <div className="text-3xl flex gap-x-4 relative justify-center space-x-2 items-center pl-[340px]">
+          No Task Created Yet..
+        </div>
       ) : (
         task?.data.map((data, index) => {
-          return <Card data={data} key={index} refresh={refresh} setRefersh={setRefersh} assignRefersh={assignRefersh} setAssignRefersh={setAssignRefersh}></Card>;
+          return (
+            <Card
+              data={data}
+              key={index}
+              refresh={refresh}
+              setRefersh={setRefersh}
+              assignRefersh={assignRefersh}
+              setAssignRefersh={setAssignRefersh}
+              setAssignPage={setAssignPage}
+            ></Card>
+          );
         })
       )}
     </div>

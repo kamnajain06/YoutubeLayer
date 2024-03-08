@@ -1,5 +1,5 @@
 // TokenContext.js
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useState } from "react";
 
 const TokenContext = createContext();
 
@@ -20,7 +20,7 @@ export const TokenProvider = ({ children }) => {
 export const useToken = () => {
   const context = useContext(TokenContext);
   if (!context) {
-    throw new Error('useToken must be used within a TokenProvider');
+    throw new Error("useToken must be used within a TokenProvider");
   }
   return context;
 };

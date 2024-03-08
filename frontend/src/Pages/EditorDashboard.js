@@ -7,6 +7,8 @@ import { useEffect } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
 import Editor from "../Components/Editor";
 import AssignedPage from "./AssignedPage";
+import { FaArrowLeft } from "react-icons/fa6";
+
 
 export const EditorDashboard = (props) => {
   const setISLoggedIn = props.setISLoggedIn;
@@ -17,6 +19,7 @@ export const EditorDashboard = (props) => {
   const navigate = useNavigate();
   const [fetchData, setFetchData] = useState({ allYoutuber: [] });
   const [category, setCategory] = useState("All");
+  const [assignPage, setAssignPage] = useState(false);
 
   useEffect(() => {
     console.log(showTask);
@@ -46,9 +49,7 @@ export const EditorDashboard = (props) => {
 
   const setEditorPage = (event) => {
     setEdPage(event.target.value);
-    event.target.value === "All"
-      ? setAllPage(true)
-      : setAllPage(false);
+    event.target.value === "All" ? setAllPage(true) : setAllPage(false);
   };
 
   const callFun = async (req, res) => {
@@ -80,7 +81,17 @@ export const EditorDashboard = (props) => {
     <div>
       <div className="mt-24 border-solid border border-red-500">
         {!showTask && (
-          <div className="gap-x-16 flex flex-row justify-center mt-[20px] ">
+          <div className="gap-x-16 relative flex flex-row justify-center mt-[20px] ">
+            {
+              assignPage &&(<button
+                onClick={()=>{setAssignPage(false)}}
+                value="All"
+                className="bg-white absolute rounded-full left-10 text-gray w-[30px] h-[30px] text-3xl text-black"
+              >
+                <FaArrowLeft />
+              </button>)
+            }
+            
             <button
               onClick={setEditorPage}
               value="All"
@@ -130,13 +141,17 @@ export const EditorDashboard = (props) => {
           </div>
         )}
       </div>
-
-      <div className=" border-solid border border-red-500 text-white flex justify-center items-center h-[80vh] mt-[20px] w-full ">
+      {
+        !assignPage && ( <div className=" border-solid border border-red-500 text-white flex justify-center items-center h-[80vh] mt-[20px] w-full ">
         <div className="border-r border-white w-10/12 h-full ">
           <div className="flex justify-center items-center h-full w-full mx-auto">
             {count === 0 ? (
               <div className="flex justify-center items-center h-full w-full mx-auto px-5 ">
-                <EdCards category={category} edPage={edPage}></EdCards>
+                <EdCards
+                  category={category}
+                  edPage={edPage}
+                  setAssignPage={setAssignPage}
+                ></EdCards>
               </div>
             ) : showTask ? (
               <CreateTask setShowTask={setShowTask}></CreateTask>
@@ -146,7 +161,7 @@ export const EditorDashboard = (props) => {
           </div>
         </div>
 
-        { allpage && (
+        {  (
           <div className="border-left border-white w-4/12 h-full">
             <div className=" h-full w-[85%] mx-auto flex-col overflow-y-scroll">
               {fetchData?.allYoutuber.map((data, index) => {
@@ -154,12 +169,15 @@ export const EditorDashboard = (props) => {
               })}
             </div>
           </div>
-         ) 
-        //  : (
-        //   <AssignedPage></AssignedPage>
-        // )
+        )}
+        
+      </div>)
       }
-      </div>
+      
+      {assignPage && (
+        <div className="h-full"><AssignedPage ></AssignedPage></div>
+          
+        )}
     </div>
   );
 };

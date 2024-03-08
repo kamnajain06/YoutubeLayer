@@ -36,6 +36,9 @@ const YtSchema = new mongoose.Schema({
       enum: ["Assigned","NotAssigned"],
       default:"NotAssigned"
     },
+    editedVideoList:[{
+      type: String,
+    }]
   
 });
 

@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from "react";
 import "./Card.css";
 import RequestedCard from "./RequestedCard";
+import { CiCirclePlus } from "react-icons/ci";
+import { useID } from "../context/AllSchemaId";
 
 const Card = (props) => {
+  const setAssignPage =props.setAssignPage;
   const setAssignRefersh = props.setAssignRefersh;
   const assignRefersh = props.assignRefersh;
   
@@ -16,6 +19,7 @@ const Card = (props) => {
   const setRefersh = props.setRefersh;
   const refresh = props.refresh;
   const cardId=props.data._id;
+  const {setYtSchemaId}= useID();
   let requestedEmail= [];
   requestedEmail=props.data.requestedMail;
 
@@ -29,7 +33,7 @@ const Card = (props) => {
 
 
 
-
+  // const [assignPage,setAssignPage]= useState(true);
   const [ytImage, setYtImage] = useState("");
   const [ytFirstName, setYtFirstName] = useState("");
   const [ytLastName, setYtLastName] = useState("");
@@ -100,6 +104,12 @@ const Card = (props) => {
       console.error(err);
     }
   };
+
+  const createAssignPage=()=>{
+    //  console.log(cardId);
+     setYtSchemaId(cardId);
+     setAssignPage(true);
+  }
 
   useEffect(() => {
     callFun();
@@ -207,6 +217,13 @@ const Card = (props) => {
                 <div className="w-full bg-gray-500 text-center rounded-md  p-1.5 text-black hover:font-bold hover:bg-gray-700 bg-fixed transition-all duration-200 ">
                   <button value="Cancel" onClick={RequestClickHandler}>
                     Cancel
+                  </button>
+                </div>
+              )}
+            {(dashPage === "Assigned" || edPage === "Assigned") && (
+                <div className=" bg-gray-500 text-4xl flex text-center rounded-full text-black hover:font-bold hover:bg-gray-700 bg-fixed transition-all duration-200 ">
+                  <button onClick={createAssignPage}>
+                    <CiCirclePlus></CiCirclePlus>
                   </button>
                 </div>
               )}
