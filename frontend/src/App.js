@@ -17,7 +17,7 @@ function App() {
 
   return (  
       <AllSchemaIdProvider>
-        <div className="bg-slate-950 w-screen h-screen text-white flex flex-col overflow-hidden ">
+        <div className="bg-slate-950 w-screen min-h-screen text-white flex flex-col overflow-hidden ">
           <Navbar isLoggedIn={isLoggedIn} setISLoggedIn={setISLoggedIn} />
           <Routes>
             <Route path="/" element={<MainHeader></MainHeader>}>
