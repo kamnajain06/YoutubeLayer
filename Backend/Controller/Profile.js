@@ -1,6 +1,19 @@
 const { response } = require("express");
 const User = require("../Model/User");
 const YtSchema = require("../Model/YtSchema");
+const { oauth2, oauth2_v2 } = require("googleapis/build/src/apis/oauth2");
+const { google } = require("googleapis");
+const CLIENT_ID = process.env.CLIENT_ID;
+const CLIENT_SECRET = process.env.CLIENT_SECRET;
+const REDIRECT_URL =process.env.REDIRECT_URL
+
+const oAuth2Client = new google.auth.OAuth2(
+  CLIENT_ID,
+  CLIENT_SECRET,
+  REDIRECT_URL
+);
+var scopes ="https://www.googleapis.com/auth/youtube.upload https://www.googleapis.com/auth/userinfo.profile";
+
 
 exports.getEdAllDetail = async (req, res) => {
   try {
@@ -189,6 +202,50 @@ exports.updateInCard = async (req, res) => {
     });
   }
 };
+
+exports.uploadVideo = async (req, res) => {
+  try {
+    const {id}=req.body
+      const yt = await YtSchema.findById(id)
+    const youtube = google.youtube({
+      version: "v3",
+      auth: oAuth2Client,
+    });
+    youtube.videos.insert(
+      {
+        resource: {
+          snippet: {
+            title: yt.ytVidName,
+            description: yt.ytVidDescription,
+          },
+          status: {
+            privacyStatus: "private",
+          },
+        },
+        part: "snippet,status",
+        media: {
+          body: yt.ytfileUrl,
+        },
+      },
+      (err, data) => {
+        if (err) throw err;
+        console.log("Uploading video Successfully In YouTube");
+        return res.status(200).json({
+          success: true,
+          message: "video uploaded successfully"
+        })
+     
+      }
+    );
+  } catch (error) {
+    console.log("Error updating", err);
+    return res.status(200).json({
+      success: false,
+      message: "Card data Not updated",
+    });
+  }
+    
+}
 
 exports.getCardDetail= async function(req, res) {
   try{
