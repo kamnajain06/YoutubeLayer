@@ -17,7 +17,6 @@ exports.videoUpload = async (req, res) => {
       ytfileUrl: response.secure_url,
       userId:id
     });
-     console.log("video uploaded full run")
     return res.status(200).json({
       success: true,
       message: "Video successfully uploaded",

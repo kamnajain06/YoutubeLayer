@@ -1,8 +1,0 @@
-.clicked {
-    --tw-bg-opacity: 1;
-    background-color: rgb(55 65 81 / var(--tw-bg-opacity));
-    font-weight: bold;
-}
-.clicked:hover {
-    font-weight: bold;
-}

@@ -78,7 +78,7 @@ export const EditorDashboard = (props) => {
   // console.log("EdPage",edPage)
 
   return (
-    <div>
+    <div className="mt-10 pt-[75px]">
     <style>
       {`
         body {
@@ -86,14 +86,14 @@ export const EditorDashboard = (props) => {
         }
       `}
     </style>
-      <div className=" gap-x-16 mt-[40px] boarder-solid border-b border-gray-200 shadow-md shadow-red-300 py-4">
+      <div className="gap-x-16 w-[70%] mx-auto flex flex-row justify-center items-center  border rounded-md border-[#1d2034] shadow-[#1d2034] z-40 shadow-md">
         {!showTask && (
           <div className="gap-x-16 relative flex flex-row justify-center mt-[20px]">
             {
               assignPage &&(<button
                 onClick={()=>{setAssignPage(false)}}
                 value="All"
-                className="bg-white absolute rounded-full left-10 text-gray w-[30px] h-[30px] text-3xl text-black "
+                className="bg-white rounded-full text-gray w-[30px] h-[30px] text-2xl text-black items-center "
               >
                 <FaArrowLeft/>
               </button>)
@@ -127,7 +127,7 @@ export const EditorDashboard = (props) => {
             >
               Done
             </button>
-            <div className="mb-[17px]">
+            <div className="mb-[17px] flex">
               <label className="text-white " htmlFor="category">
                 Category:-{" "}
               </label>
@@ -150,7 +150,7 @@ export const EditorDashboard = (props) => {
       </div>
       {
         !assignPage && ( <div className=" text-white flex justify-center items-center h-[80vh] mt-[20px] w-full ">
-        <div className="border-r-2 border-orange-500 rounded-[80px] mr-6 w-10/12 h-full ">
+        <div className="border-r-2 border-white rounded-[40px] mr-6 w-10/12 h-full ">
           <div className="flex justify-center items-center h-full w-full mx-auto ">
             {count === 0 ? (
               <div className="flex justify-center items-center h-full w-full mx-auto px-5 ">
@@ -169,7 +169,7 @@ export const EditorDashboard = (props) => {
         </div>
 
         {  (
-          <div className="border-l-2 border-green-400 rounded-[80px] w-4/12 h-full overflow-y-scroll ">
+          <div className="border-l-2 border-white rounded-[40px] w-4/12 h-full overflow-y-scroll ">
             <div className=" h-full w-[85%] mx-auto flex-col ">
               {fetchData?.allYoutuber.map((data, index) => {
                 return <Editor data={data} key={index}></Editor>;

@@ -4,8 +4,10 @@ import { toast } from "react-hot-toast";
 import logo from "../images/logo.png";
 import { MdAccountCircle } from "react-icons/md";
 import { PopUp } from "./PopUp";
+import { useLocation, matchPath } from "react-router-dom"
 
 export const Navbar = (props) => {
+
   let isLoggedIn = props.isLoggedIn;
   let setISLoggedIn = props.setISLoggedIn;
   const image = localStorage.getItem("image");
@@ -13,9 +15,17 @@ export const Navbar = (props) => {
   let YouTuber = false;
   let editor = false;
   savedAccount === "YouTuber" ? (YouTuber = true) : (editor = true);
+
   const [isPopUpShow, setIsPopUpShow] = useState(false);
+  const location = useLocation();
+
+
+  const matchRoute = (route) => {
+    return matchPath({ path: route }, location.pathname);
+  }
+
   return (
-    <div className=" overflow-hidden bg-black fixed right-0 left-0 top-0 z-40 pt-4 ">
+    <div className=" overflow-hidden bg-black fixed right-0 left-0 top-0 z-40 pt-4 border-b border-[#131625]">
       <div className="flex  justify-between items-center w-11/12 max-w-[1160px] mx-auto ">
         <div className="  ">
           <NavLink to="/">
@@ -28,7 +38,7 @@ export const Navbar = (props) => {
               <li>
                 <NavLink
                   to="/"
-                  className=" text-white p-[4px] px-[10px] rounded-[8px] focus:bg-white focus:text-black hover:cursor-pointer hover:bg-white hover:text-black transition-all duration-100"
+                  className={`${matchRoute('/') ?  "bg-white text-black " : "text-white "} p-[4px] px-[10px] rounded-[8px] hover:cursor-pointer hover:bg-white hover:text-black transition-all duration-100`}
                 >
                   Home
                 </NavLink>
@@ -36,7 +46,7 @@ export const Navbar = (props) => {
               <li>
                 <NavLink
                   to="/about"
-                  className=" text-white p-[4px] px-[12px] rounded-[8px] focus:bg-white focus:text-black mx-[10px] cursor-pointer hover:bg-white hover:text-black transition-all duration-100"
+                  className={`${matchRoute('/about') ?  "bg-white text-black " : "text-white "} p-[4px] px-[10px] rounded-[8px] hover:cursor-pointer hover:bg-white hover:text-black transition-all duration-100`}
                 >
                   About
                 </NavLink>
@@ -44,21 +54,21 @@ export const Navbar = (props) => {
             </ul>
             {!isLoggedIn && (
               <NavLink to="/login">
-                <button className=" text-white px-[12px] py-[1.5px] focus:bg-white focus:text-black rounded-[8px] mx-[10px] cursor-pointer hover:bg-white hover:text-black transition-all duration-100">
+                <button className={`${matchRoute('/login') ? "bg-white text-black " : "text-white "} px-[10px] rounded-[8px] hover:cursor-pointer hover:bg-white hover:text-black transition-all duration-100`}>
                   Login
                 </button>
               </NavLink>
             )}
             {isLoggedIn && YouTuber && (
               <NavLink to="/dashboard">
-                <button className="text-white px-[12px] focus:bg-white focus:text-black rounded-[8px] cursor-pointer hover:bg-white hover:text-black transition-all duration-100">
+                <button className={`${matchRoute('/dashboard') ? "bg-white text-black " : "text-white "}  px-[10px] rounded-[8px] hover:cursor-pointer hover:bg-white hover:text-black transition-all duration-100`}>
                   Dashboard
                 </button>
               </NavLink>
             )}
             {isLoggedIn && editor && (
               <NavLink to="/editorDashboard">
-                <button className="text-white px-[12px] focus:bg-white focus:text-black rounded-[8px] cursor-pointer hover:bg-white hover:text-black transition-all duration-100">
+                <button className={`${matchRoute('/editorDashboard') ? "bg-white text-black " : "text-white "}  px-[10px] rounded-[8px] hover:cursor-pointer hover:bg-white hover:text-black transition-all duration-100`}>
                   Editor Dashboard
                 </button>
               </NavLink>

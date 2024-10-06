@@ -23,17 +23,6 @@ const Card = (props) => {
   let requestedEmail= [];
   requestedEmail=props.data.requestedMail;
 
-  // console.log(requestedEmail);
-  //  console.log(props.data.ytCategory)
-  //  console.log(props.data.requestedMail)
-  // console.log("Inside Card",props.data._id);
-
-  // console.log(ytUrl)
-  // console.log(ytVidName)
-
-
-
-  // const [assignPage,setAssignPage]= useState(true);
   const [ytImage, setYtImage] = useState("");
   const [ytFirstName, setYtFirstName] = useState("");
   const [ytLastName, setYtLastName] = useState("");
@@ -96,7 +85,6 @@ const Card = (props) => {
       }
       const result = await response.json();
 
-      // console.log(result.data.firstName);
       setYtImage(result.data.image);
       setYtFirstName(result.data.firstName);
       setYtLastName(result.data.lastName);
@@ -106,7 +94,6 @@ const Card = (props) => {
   };
 
   const createAssignPage=()=>{
-    //  console.log(cardId);
      setYtSchemaId(cardId);
      setAssignPage(true);
   }
@@ -114,9 +101,8 @@ const Card = (props) => {
   useEffect(() => {
     callFun();
   }, [userId]);
-  //  console.log(ytUrl);
   return (
-    <div className="flex flex-col border border-white w-[300px] max-h-[600px] ">
+    <div className="flex flex-col border border-[#1d2034] rounded-md w-[300px] h-full max-h-[450px] ">
       <div>
         {editor && (
           <div className="flex items-center gap-3 py-2 px-4 cursor-pointer">

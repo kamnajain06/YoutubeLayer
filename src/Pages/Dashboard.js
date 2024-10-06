@@ -13,7 +13,7 @@ import { Footer } from "../Components/Footer";
 
 export const Dashboard = (props) => {
   const [dashPage, setDashPage] = useState("All");
-  const [assignPage,setAssignPage]= useState(false)
+  const [assignPage, setAssignPage] = useState(false)
   const [allPage, setAllPage] = useState(true);
   const setISLoggedIn = props.setISLoggedIn;
   const [category, setCategory] = useState("All");
@@ -21,7 +21,7 @@ export const Dashboard = (props) => {
   const [showTask, setShowTask] = useState(false);
   const navigate = useNavigate();
   const [fetchData, setFetchData] = useState({ allEditor: [] });
-  useEffect(() => {}, []);
+  useEffect(() => { }, []);
 
   useEffect(() => {
     const savedAccount = localStorage.getItem("accountType");
@@ -71,24 +71,24 @@ export const Dashboard = (props) => {
   }, []);
 
   return (
-    <div>
-     <style>
-      {`
+    <div className="mt-10 pt-[75px]">
+      <style>
+        {`
         body {
           overflow-x: hidden;
         }
       `}
-    </style>
-      <div className="gap-x-16 flex flex-row justify-center mt-[50px] boarder-solid border-b border-gray-200 z-40 shadow-md shadow-red-300 py-5">
-      {
-              assignPage &&(<button
-                onClick={()=>{setAssignPage(false)}}
-                value="All"
-                className="bg-white absolute rounded-full left-10 text-gray w-[30px] h-[30px] text-3xl text-black"
-              >
-                <FaArrowLeft />
-              </button>)
-            }
+      </style>
+      <div className="gap-x-16 w-[60%] mx-auto flex flex-row justify-center  border rounded-md border-[#1d2034] shadow-[#1d2034] z-40 shadow-md py-5 ">
+        {
+          assignPage && (<button
+            onClick={() => { setAssignPage(false) }}
+            value="All"
+            className="bg-white absolute rounded-full left-10 text-gray w-[30px] h-[30px] text-3xl text-black"
+          >
+            <FaArrowLeft />
+          </button>)
+        }
         <button
           onClick={setEditorPage}
           value="All"
@@ -131,37 +131,37 @@ export const Dashboard = (props) => {
       {
         !assignPage && (
           <div className=" text-white flex justify-center items-center h-[80vh] mt-[30px] w-full px-[20px]">
-        <div className="w-10/12 h-full border-r-2 border-orange-500 rounded-[50px]">
-          {
-            <div className="flex justify-center items-center h-full  mt-[10px] w-full mx-auto px-5 ">
-              {showTask ? (
-                <CreateTask setShowTask={setShowTask}></CreateTask>
-              ) : (
-                <Cards dashPage={dashPage} setAssignPage={setAssignPage}></Cards>
-              )}
+            <div className="w-10/12 h-full border-r-2 border-white rounded-[40px]">
+              {
+                <div className="flex justify-center items-center h-full  mt-[10px] w-full mx-auto px-5 ">
+                  {showTask ? (
+                    <CreateTask setShowTask={setShowTask}></CreateTask>
+                  ) : (
+                    <Cards dashPage={dashPage} setAssignPage={setAssignPage}></Cards>
+                  )}
+                </div>
+              }
             </div>
-          }
-        </div>
-        {allPage && (
-          <div className=" w-4/12 h-full overflow-y-scroll border-l-2 border-green-400 rounded-[50px] ml-3">
-            <div className="  w-[85%] mx-auto flex-col mb-1 ">
-              {fetchData?.allEditor.map((data, index) => {
-                return <Editor data={data} key={index}></Editor>;
-              })}
-            </div>
+            {allPage && (
+              <div className=" w-4/12 h-full overflow-y-scroll border-l-2  border-white  rounded-[40px] ml-3">
+                <div className="  w-[85%] mx-auto flex-col mb-1 ">
+                  {fetchData?.allEditor.map((data, index) => {
+                    return <Editor data={data} key={index}></Editor>;
+                  })}
+                </div>
+              </div>
+            )}
           </div>
-        )}
-      </div>
         )
       }
       {assignPage && (
         <div className="h-full"><AssignedPage setAssignPage={setAssignPage}></AssignedPage></div>
-          
-        )}
-        {
-          allPage && <Footer className="footer"/>
-        }
-     
+
+      )}
+      {
+        allPage && <Footer className="footer" />
+      }
+
     </div>
   );
 };

@@ -102,16 +102,16 @@ const AssignedPage = () => {
     callFun();
   }, [createTab, loader, refersh]);
   return (
-    <div className="w-screen h-screen flex mt-[50px] ">
+    <div className="w-full h-screen flex mt-[50px] mx-4">
       {!createTab && (
         <div className="w-3/4  h-full ">
-          <div className="w-full flex  px-16 border-b-2 border-orange-500 rounded-[100px]">
+          <div className="w-full flex  px-16 border-b-2 border-white rounded-[20px]">
             <div className="flex bg-gray-500 w-1/3 mb-4 ">
               <video controls src={videoUrl}></video>
             </div>
 
             <div className="w-2/3  px-5 flex flex-col justify-center gap-1 overflow-hidden font-serif">
-              <div className="text-xl text-orange-400">
+              <div className="text-xl text-white">
                 TITLE:
                 <span className="text-gray-400 text-sm"> {title}</span>
               </div>
@@ -119,7 +119,7 @@ const AssignedPage = () => {
                 CATEGORY:{" "}
                 <span className="text-gray-400 text-sm">{category}</span>
               </h1>
-              <h1 className="text-xl text-green-400">
+              <h1 className="text-xl text-white">
                 DESCRIPTION:
                 <span className="text-gray-400 text-sm">{discription}</span>
               </h1>
@@ -157,7 +157,7 @@ const AssignedPage = () => {
             </div>
           )}
 
-          <div className="w-full  h-full  border-t-2 border-green-500 rounded-[80px] pt-5">
+          <div className="w-full  h-full  border-t-2 border-white rounded-[20px] pt-5">
             <div className="w-[97%] h-80  pt-5 mx-auto flex flex-wrap gap-4 ">
               {editedVideoDataLength && (
                 <div className="text-center mx-auto my-auto text-2xl font-mono">
@@ -181,7 +181,7 @@ const AssignedPage = () => {
       )}
 
       {!createTab && (
-        <div className="w-1/4 ml-1 border-x-2 mr-5 rounded-[100px] border-orange-400  flex flex-col justify-center items-center font-serif">
+        <div className="w-1/4 ml-16 border-x-2 mr-5 border-white rounded-[20px] flex flex-col justify-center items-center font-serif">
           CHAT BOX
           <h2 className="m-3">Comming Soon...</h2>
         </div>

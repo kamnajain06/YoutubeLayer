@@ -9,14 +9,14 @@ exports.signup=async(req,res)=>{
       if(!firstName || !lastName || !email || !password || !confirmPassword || !accountType){
         return res.status(404).json({
             success: false,
-            message:"Fill Are require fields"
+            message:"Fill the required fields"
         })
       }
 
       if(password !== confirmPassword){
         return res.status(404).json({
             success: false,
-            message:"Password Not Match"
+            message:"Passwords do not match"
         })
       }
       const existingUser = await User.findOne({ email});
@@ -27,15 +27,15 @@ exports.signup=async(req,res)=>{
             message:"User already exists"
         })
       }  
-      console.log(password);
+
       const hashPassword = await bcrypt.hash(password,10)
       if(!hashPassword){
         return res.status(400).json({
             success: false,
-            message:"Hashing the password failed"
+            message:"Password hashing failed"
         })
       }
-      console.log(hashPassword);
+
       const newUser = await User.create({
         firstName,
         lastName,
@@ -45,7 +45,7 @@ exports.signup=async(req,res)=>{
         image: `https://api.dicebear.com/5.x/initials/svg?seed=${firstName}${lastName}`
       });
       const existUser = await User.findOne({ email });
-
+      
       const payload = {
         email: existUser.email,
         accountType: existUser.accountType,
@@ -70,7 +70,8 @@ exports.signup=async(req,res)=>{
 
       
   }
-  catch(e){
+  catch (e) {
+    console.log("error", e);
     return res.status(400).json({
         success: false,
         message:"Error in SignUp"
