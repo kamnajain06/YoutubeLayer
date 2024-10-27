@@ -29,7 +29,7 @@ app.use("/api/v1",EdRoute);
 dbConnect();
 cloudinaryConnect();
 
-
+app.get('/', () => console.log("Server is running fine"));
 app.listen(port,()=>{
     console.log('listening on port',port);
 });
