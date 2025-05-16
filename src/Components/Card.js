@@ -155,7 +155,7 @@ const Card = (props) => {
           </h3>
         </div>
         {YouTuber && dashPage === "Requested" &&
-          <div className="border-solid border border-red-300 rounded-[10px] w-full h-[180px] overflow-y-scroll">{
+          <div className=" rounded-[10px] w-full h-[180px] overflow-y-scroll">{
             requestedEmail?.map((data,index)=>{
               return <RequestedCard data={data} cardId={cardId} key={index} assignRefersh={assignRefersh} setAssignRefersh={setAssignRefersh} ></RequestedCard>
             })
